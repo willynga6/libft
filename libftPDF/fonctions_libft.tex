@@ -1,0 +1,1206 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage[export]{adjustbox}
+\usepackage{hyperref}
+\usepackage{sectsty}
+\sectionfont{\color{purple}}
+\subsectionfont{\color{blue}}
+\subsubsectionfont{\color{violet}}
+\newcommand{\mytextcolor}[1]{\textcolor{red}{#1}}
+\usepackage{enumitem}
+\usepackage{lscape} % Option pour la rotation du tableau si nécessaire
+\usepackage{array}
+\renewcommand{\textbf}[1]{\textcolor{orange}{\bfseries #1}}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue, % Couleur des liens internes
+	citecolor=blue, % Couleur des citations.
+	urlcolor=red % Couleur des liens URL
+	}
+\title{Fonctions de ma libft}
+\author{William}
+\date{25/10/2025}
+
+\begin{document}
+	\maketitle
+	\tableofcontents
+	\section{Fonctions de la libc}
+		\subsection{isalpha}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{int	ft\_isalpha(int c)}
+				\item Check whether the character is alphabetic.
+				\begin{verbatim}
+int	ft_isalpha(int c)
+{
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
+	return (0);
+}
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{isdigit}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{int ft\_isdigit(int c)}
+				\item Check whether the character is numeric.
+				\begin{verbatim}
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{isalnum}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{int ft\_isalnum(int c)
+}
+				\item Check whether the caracter is alphabetic or numeric.
+				\begin{verbatim}
+int	ft_isalnum(int c)
+{
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122) || (c >= '0' && c <= '9'))
+		return (1);
+	return (0);
+}
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{isascii}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{int	ft\_isascii(int c)}
+				\item Check whether the character is in the ASCII table.
+				\begin{verbatim}
+int	ft_isascii(int c)
+{
+	if (c >= 0 && c <= 127)
+		return (1);
+	return (0);
+}
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{isprint}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Check whether the character is printable.
+				\item Printable characters in the ASCII table start from 32 to 126.
+				\begin{verbatim}
+int	ft_isprint(int c)
+{
+	if (c >= 32 && c <= 126)
+		return (1);
+	return (0);
+}
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{memset}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{void    *ft\_memset(void *ptr, int c, size\_t n)}
+				\item Fill the n first octet/bytes of the memory area pointed by ptr with the constant byte c.
+				\item We converted the pointer to unsigned char to be able to scan the memory bytes.
+				\item This function does not check if the pointer is NULL.
+				\begin{verbatim}
+void    *ft_memset(void *ptr, int c, size_t n)
+{
+        size_t          i;
+        unsigned char   *p;
+
+        p = (unsigned char *)ptr;
+        i = 0;
+        while (i < n)
+        {
+                p[i] = (unsigned char)c;
+                i++;
+        }
+        return (ptr);
+}
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{bzero}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{void ft\_bzero(void *s, size\_t n)}
+				\item Fill n first bytes with the value 0 in the area pointed by s.
+				\begin{verbatim}
+void    ft_bzero(void *s, size_t n)                                             
+{                                                                               
+    size_t          i;                                                          
+    unsigned char   *p;                                                         
+                                                                                
+    i = 0;                                                                      
+    p = (unsigned char *)s;                                                     
+    if (!n)                                                                     
+        return ;                                                                
+    if (!s)                                                                     
+        return ;                                                                
+    while (i < n)                                                               
+    {                                                                           
+        p[i] = 0;                                                               
+        i++;                                                                    
+    }                                                                           
+}   
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{memcpy}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{void * ft\_memcpy(void *destination, const void *source, size\_t n)}
+				\item Copy the N first bytes of src to the N first bytes of dest.
+				\item If src == dest, we return dest !
+				\begin{verbatim}
+void * ft_memcpy(void *destination, const void *source, size_t n)               
+{                                                                               
+    unsigned char *dest;                                                        
+    unsigned char *src;                                                         
+    size_t i;                                                                   
+                                                                                
+    dest = (unsigned char *)destination;                                        
+    src = (unsigned char *)source;                                              
+    i = 0;                                                                      
+    if (source == destination)                                                  
+        return destination;                                                     
+    while (i < n)                                                               
+    {                                                                           
+        dest[i] = src[i];                                                       
+        i++;                                                                    
+    }                                                                           
+    return destination;                                                         
+}  
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{memmove}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{void    *ft\_memmove(void *destination, const void *source, size\_t size)}
+				\item Copy n bytes of the source to the destination unlike memcopy, it checks for overlap conditions.
+				\item If the overlap is done from the front we will copy the information from the right to the left.
+				\item For the others situations, we will copy from the left to the right.
+				\begin{verbatim}
+void    *ft_memmove(void *destination, const void *source, size_t size)         
+{                                                                               
+    unsigned char       *dest;                                                  
+    const unsigned char *src;                                                   
+    size_t              i;                                                      
+                                                                                
+    dest = (unsigned char *)destination;                                        
+    src = (unsigned char *)source;                                              
+    if (!dest && !src)                                                          
+        return (NULL);                                                          
+    if (!size)                                                                  
+        return (dest);                                                          
+    if (src < dest && dest < (src + size))                                      
+    {                                                                           
+        i = size;                                                               
+        while (i-- > 0)                                                         
+            dest[i] = src[i];                                                   
+        return (dest);                                                          
+    }                                                                           
+    i = 0;                                                                      
+    while (i < size)                                                            
+    {                                                                           
+        dest[i] = src[i];                                                       
+        i++;                                                                    
+    }                                                                           
+    return (dest);                                                              
+} 
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{memchr}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{void    *ft\_memchr(const void*s, int c, size\_t n) }
+				\item Scan the n first bytes to find the first occurence c.
+				\item If c is found, we return the adress of the first occurence else we return NULL.
+				\begin{verbatim}
+#include "/home/w/Bureau/libft/include/libft.h"                                 
+                                                                                
+void    *ft_memchr(const void*s, int c, size_t n)                               
+{                                                                               
+    unsigned char   *search;                                                    
+    size_t          i;                                                          
+                                                                                
+    search = (unsigned char *)s;                                                
+    i = 0;                                                                      
+    if (!search)                                                                
+        return (NULL);                                                          
+    while (i < n)                                                               
+    {                                                                           
+        if (*search == (unsigned char)c)                                        
+            return (search);                                                    
+        i++;                                                                    
+        search++;                                                               
+    }                                                                           
+    return (NULL);                                                              
+} 
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{memcmp}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{int ft\_memcmp(const void *s1, const void *s2, size\_t n)       }                  
+				\item Compare the first n bytes of the memory area of s1 and s2.
+				\begin{verbatim}
+int ft_memcmp(const void *s1, const void *s2, size_t n)                         
+{                                                                               
+    size_t i = 0;                                                               
+    unsigned char *uno = (unsigned char *)s1;                                   
+    unsigned char *deux = (unsigned char *)s2;                                  
+                                                                                
+    while (i < n)                                                               
+    {                                                                           
+        if (uno[i] != deux[i])                                                  
+            return (uno[i] - deux[i]);                                          
+        i++;                                                                    
+    }                                                                           
+    return 0;                                                                   
+}   
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{strlen}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{int ft\_memcmp(const void *s1, const void *s2, size\_t n)                         }
+				\item Return the number of character of the string.
+				\begin{verbatim}
+int ft_memcmp(const void *s1, const void *s2, size_t n)                         
+{                                                                               
+    size_t          i;                                                          
+    unsigned char   *uno;                                                       
+    unsigned char   *deux;                                                      
+                                                                                
+    i = 0;                                                                      
+    uno = (unsigned char *)s1;                                                  
+    deux = (unsigned char *)s2;                                                 
+    while (i < n)                                                               
+    {                                                                           
+        if (uno[i] != deux[i])                                                  
+            return (uno[i] - deux[i]);                                          
+        i++;                                                                    
+    }                                                                           
+    return (0);                                                                 
+}
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{strchr}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{char    *ft\_strchr(const char *s, int c)}
+				\item Return the first occurence of the character c in the string s.
+				\begin{verbatim}
+/* Le caractère '\0' est pris en compte */                                      
+char    *ft_strchr(const char *s, int c)                                        
+{                                                                               
+    while (*s)                                                                  
+    {                                                                           
+        if (*s == (char)c)                                                      
+            return ((char *)s);                                                 
+        s++;                                                                    
+    }                                                                           
+    if (*s == (char)c)                                                          
+        return ((char *)s);                                                     
+    return (NULL);                                                              
+}   
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{strrchr}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{char		*ft\_strrchr(const char *s, int c)}
+				\item Return the last occurence of the character c in the string s.
+				\begin{verbatim}
+/*                                                                              
+**  Ne pas oublier d'inclure le caractère de fin de chaîne                      
+**  Dans la comparaison acvec c                                                 
+*/                                                                              
+char    *ft_strrchr(const char *s, int c)                                       
+{                                                                               
+    char    *last_occurence;                                                    
+    int     find;                                                               
+                                                                                
+    find = 0;                                                                   
+    while (*s)                                                                  
+    {                                                                           
+        if (*s == (char)c)                                                      
+        {                                                                       
+            last_occurence = (char *)s;                                         
+            find++;                                                             
+        }                                                                       
+        s++;                                                                    
+    }                                                                           
+    if (*s == (char)c)                                                          
+        return ((char *)s);                                                     
+    if (find)                                                                   
+        return (last_occurence);                                                
+    return (NULL);                                                              
+}  
+				\end{verbatim}
+			\end{itemize}
+			
+		\subsection{strncmp}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{int ft\_strncmp(const char *s1, const char *s2, size\_t n)}
+				\item Compare the n first character of s1 and s2.
+				\begin{verbatim}
+/*  Ne pas oublier la comparaison avec le caractère de fin */                   
+int ft_strncmp(const char *s1, const char *s2, size_t n)                        
+{                                                                               
+    size_t  i;                                                                  
+                                                                                
+    i = 0;                                                                      
+    while (i < n)                                                               
+    {                                                                           
+        if (s1[i] != s2[i])                                                     
+            return ((int)s1[i] - (int)s2[i]);                                   
+        if (s1[1] == '\0' && s2[1] == '\0')                                     
+            break ;                                                             
+        i++;                                                                    
+    }                                                                           
+    return (0);                                                                 
+}     
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{strnstr}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{char    *ft\_strnstr(const char *big, const char *little, size\_t len)}
+				\item Search the first occurence of the string little in the string big.
+				\begin{verbatim}
+char    *ft_strnstr(const char *big, const char *little, size_t len)            
+{                                                                               
+    size_t  i;                                                                  
+    size_t  j;                                                                  
+                                                                                
+    i = 0;                                                                      
+    if (!(*little))                                                             
+        return ((char *)big);                                                   
+    while (i < len && big[i])                                                   
+    {                                                                           
+        j = 0;                                                                  
+        if (big[i] == little[j])                                                
+        {                                                                       
+            while ((i + j < len) && big[i + j]                                  
+                && little[j] && little[j] == big[i + j])                        
+                j++;                                                            
+            if (little[j] == '\0')                                              
+                return ((char *)big + i);                                       
+        }                                                                       
+        i++;                                                                    
+    }                                                                           
+    return (NULL);                                                              
+}   
+				\end{verbatim}
+			\end{itemize}
+	
+	\subsection{toupper}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{int ft\_toupper(int c)}
+			\item Replace the lower character into upper character.
+			\begin{verbatim}
+int ft_toupper(int c)                                                           
+{                                                                               
+    if ((unsigned char)c >= 'a' && (unsigned char)c <= 'z')                     
+        return (c - 32);                                                        
+    return (c);                                                                 
+}
+			\end{verbatim}
+		\end{itemize}
+		
+	\subsection{tolower}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{int ft\_tolower(int c)}
+			\item Replace the upper character into lower character.
+			\begin{verbatim}
+int ft_tolower(int c)                                                           
+{                                                                               
+    if ((unsigned char)c >= 'A' && (unsigned char)c <= 'Z')                     
+        return (c + 32);                                                        
+    return (c);                                                                 
+}
+			\end{verbatim}
+		\end{itemize}
+	
+	\subsection{atoi}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{int ft\_atoi(const char *s)                                                      
+}
+			\item Convert a string into an integer.
+			\begin{verbatim}
+int ft_atoi(const char *s)                                                      
+{                                                                               
+    int n;                                                                      
+    int sign;                                                                   
+                                                                                
+    n = 0;                                                                      
+    sign = 1;                                                                   
+    while ((*s >= 9 && *s <= 13) || *s == 32)                                   
+        s++;                                                                    
+    if (*s == '-' || *s == '+')                                                 
+    {                                                                           
+        if (*s == '-')                                                          
+            sign = -1;                                                          
+        s++;                                                                    
+        if (*s == '-' || *s == '+')                                             
+            return (0);                                                         
+    }                                                                           
+    while (*s >= '0' && *s <= '9')                                              
+    {                                                                           
+        n = n * 10 + (*s - '0');                                                
+        s++;                                                                    
+    }                                                                           
+    return (n * sign);                                                          
+}  
+			\end{verbatim}
+		\end{itemize}
+	
+	\subsection{calloc}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{void    *ft\_calloc(size\_t nmemb, size\_t size)}
+			\item The calloc() function allocates memory for an array of  nmemb  elements of size bytes each and returns a pointer to the allocated memory. The memory is set to zero.
+			\begin{verbatim}
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	unsigned char	*ptr;
+	size_t			i;
+
+	i = 0;
+	if (nmemb > SIZE_MAX / size)
+		return (NULL);
+	if (nmemb == 0 || size == 0)
+	{
+		ptr = malloc(1);
+		if (!ptr)
+			return (NULL);
+		return (ptr);
+	}
+	ptr = malloc(nmemb * size);
+	if (!ptr)
+		return (NULL);
+	while (i < nmemb * size)
+		ptr[i++] = 0;
+	return ((void *)ptr);
+}
+
+			\end{verbatim}
+		\end{itemize}
+	
+	\subsection{strdup}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{char    *ft\_strdup(const char *s)}
+			\item Copy the string with malloc in a new char*.
+			\begin{verbatim}
+char    *ft_strdup(const char *s)                                               
+{                                                                               
+    unsigned int    size;                                                       
+    unsigned int    i;                                                          
+    char            *copy;                                                      
+                                                                                
+    size = ft_strlen(s);                                                        
+    copy = malloc(size + 1);                                                    
+    i = 0;                                                                      
+    while (i < size)                                                            
+    {                                                                           
+        copy[i] = s[i];                                                         
+        i++;                                                                    
+    }                                                                           
+    copy[i] = '\0';                                                             
+    return (copy);                                                              
+} 
+			\end{verbatim}
+		\end{itemize}
+
+\section{Fonctions supplémentaires}
+	
+	\subsection{substr}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{char    *ft\_substr(char const *s, unsigned int start, size\_t len)}
+			\item Return wether the position of the substring (if it exists) or NULL.
+			\begin{verbatim}
+char    *ft_substr(char const *s, unsigned int start, size_t len)               
+{                                                                               
+    unsigned int    i;                                                          
+    char            *copy;                                                      
+                                                                                
+    i = 0;                                                                      
+    if (start >= ft_strlen(s))                                                  
+    {                                                                           
+        copy = malloc(1);                                                       
+        if (!copy)                                                              
+            return (NULL);                                                      
+        *copy = '\0';                                                           
+        return (copy);                                                          
+    }                                                                           
+    if (start + (unsigned int)len > ft_strlen(s))                               
+        len = ft_strlen(s) - start;                                             
+    copy = malloc(sizeof(char) * (len + 1));                                    
+    if (!copy || !s)                                                            
+        return (NULL);                                                          
+    while (i < len)                                                             
+    {                                                                           
+        copy[i] = s[start + i];                                                 
+        i++;                                                                    
+    }                                                                           
+    copy[i] = '\0';                                                             
+    return (copy);                                                              
+}
+			\end{verbatim}
+		\end{itemize}
+	
+	\subsection{strjoin}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{char    *ft\_strjoin(char const *s1, char const *s2)}
+			\item Create a string composed of the string s1 concatenate with the string s2.
+			\begin{verbatim}
+char    *remplissage(char const *s1, char const *s2)                            
+{                                                                               
+    unsigned int    i;                                                          
+    char            *copie;                                                     
+                                                                                
+    i = 0;                                                                      
+    copie = malloc((sizeof(char) * (ft_strlen(s1) + ft_strlen(s2))) + 1);       
+    if (!copie)                                                                 
+        return (NULL);                                                          
+    i = 0;                                                                      
+    while (*s1)                                                                 
+    {                                                                           
+        copie[i++] = *s1;                                                       
+        s1++;                                                                   
+    }                                                                           
+    while (*s2)                                                                 
+    {                                                                           
+        copie[i++] = *s2;                                                       
+        s2++;                                                                   
+    }                                                                           
+    copie[i] = '\0';                                                            
+    return (copie);                                                             
+}                                                                               
+                                                                                
+char    *ft_strjoin(char const *s1, char const *s2)                             
+{                                                                               
+    char    *copie;                                                             
+                                                                                
+    if (!s1 || !s2)                                                             
+        return (NULL);                                                          
+    if (*s1 == '\0' && *s2 == '\0')                                             
+    {                                                                           
+        copie = malloc(1);                                                      
+        if (!copie)                                                             
+            return (NULL);                                                      
+        copie[0] = '\0';                                                        
+        return (copie);                                                         
+    }                                                                           
+    copie = remplissage(s1, s2);                                                
+    return (copie);                                                             
+} 
+			\end{verbatim}
+		\end{itemize}
+	
+	\subsection{strlcat}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{size\_t  ft\_strlcat(char *dest, const char *src, size\_t size) }
+			\item Concatenate two strings.
+			\item The moulinette only check the case if (size == 0 \&\& !dest) i have to return the size of src.
+			\begin{verbatim}
+size_t  ft_strlcat(char *dest, const char *src, size_t size)                    
+{                                                                               
+    size_t  dlen;                                                               
+    size_t  slen;                                                               
+    size_t  i;                                                                  
+    size_t  j;                                                                  
+                                                                                
+    if (!dest && size == 0)                                                     
+        return (ft_strlen(src));                                                
+                                                                                
+    dlen = ft_strlen(dest);                                                     
+    slen = ft_strlen(src);                                                      
+                                                                                
+    if (size <= dlen)                                                           
+        return (size + slen);                                                   
+                                                                                
+    i = dlen;                                                                   
+    j = 0;                                                                      
+    while (src[j] && i < size - 1)                                              
+        dest[i++] = src[j++];                                                   
+    dest[i] = '\0';                                                             
+                                                                                
+    return (dlen + slen);                                                       
+} 
+			\end{verbatim}
+		\end{itemize}
+	
+	\subsection{strtrim}
+		\begin{itemize}[label=$\rightarrow$]
+			\item \texttt{char    *ft\_strtrim(char const *s1, char const *set) }
+			\item Remove all the set in the start and the end of the string.
+			\begin{verbatim}
+int is_set(char c, const char *set)                                             
+{                                                                               
+    while (*set)                                                                
+    {                                                                           
+        if (c == *set)                                                          
+            return (1);                                                         
+        set++;                                                                  
+    }                                                                           
+    return (0);                                                                 
+}                                                                               
+                                                                                
+size_t  ft_strlcpy(char *dst, const char *src, size_t dstsize)                  
+{                                                                               
+    size_t  i;                                                                  
+                                                                                
+    i = 0;                                                                      
+    if (!src)                                                                   
+        return (0);                                                             
+    if (!dstsize)                                                               
+        return ((size_t)ft_strlen(src));                                        
+    while (src[i] && i < dstsize - 1)                                           
+    {                                                                           
+        dst[i] = src[i];                                                        
+        i++;                                                                    
+    }                                                                           
+    dst[i] = '\0';                                                              
+    return ((size_t)ft_strlen(src));                                            
+}  
+
+char    *ft_strtrim(char const *s1, char const *set)                            
+{                                                                               
+    unsigned int    start;                                                      
+    unsigned int    end;                                                        
+    char            *new_word;                                                  
+                                                                                
+    if (!s1)                                                                    
+        return (NULL);                                                          
+    if (!set)                                                                   
+        return (ft_strdup(s1));                                                 
+    start = 0;                                                                  
+    while (s1[start] && is_set(s1[start], set))                                 
+        start++;                                                                
+    end = ft_strlen(s1);                                                        
+    if (start == end)                                                           
+        return (ft_strdup(""));                                                 
+    end--;                                                                      
+    while (end > start && is_set(s1[end], set))                                 
+        end--;                                                                  
+    new_word = malloc(sizeof(char) * (end - start + 2));                        
+    if (!new_word)                                                              
+        return (NULL);                                                          
+    ft_strlcpy(new_word, s1 + start, end - start + 2);                          
+    return (new_word);                                                          
+}   
+			\end{verbatim}
+		\end{itemize}
+	
+	\subsection{strsplit}
+		\begin{itemize}
+			\item Prototype: \texttt{•}
+			\item Splits the src string into words separated by one or more of the characters in sep.
+			\begin{verbatim}
+**	Fonctionnelle
+void	all_clear(char **array)
+{
+	int	i;
+
+	if (!array)
+		return ;
+	i = 0;
+	while (array[i])
+		free(array[i++]);
+	free(array);
+	return ;
+}
+*/
+
+// Fonctionnelle.
+unsigned int	is_separator(char c, char separator)
+{
+	if (c == separator)
+		return (1);
+	return (0);
+}
+
+// Fonctionnelle
+unsigned int	count_word(char const *s, char sep)
+{
+	unsigned int	count;
+	int				in_word;
+
+	count = 0;
+	in_word = 0;
+	while (*s)
+	{
+		if (is_separator(*s, sep))
+			in_word = 0;
+		else if (!in_word)
+		{
+			in_word = 1;
+			count++;
+		}
+		s++;
+	}
+	return (count);
+}
+
+// Fonctionnelle
+char	*ft_strndup(char *s, int n)
+{
+	char	*copy;
+	int		i;
+
+	i = 0;
+	if (*s == '\0' || !s)
+	{
+		copy = malloc(1);
+		*copy = '\0';
+		return (copy);
+	}
+	copy = malloc(sizeof(char) * (n + 1));
+	if (!copy)
+		return (NULL);
+	while (i < n)
+	{
+		copy[i] = s[i];
+		i++;
+	}
+	copy[i] = '\0';
+	return (copy);
+}
+
+// Fonctionnelle
+char	**fill_array(char **array, char const *s,
+
+unsigned int nb_word, char sep)
+{
+	unsigned int	i;
+	unsigned int	len;
+
+	i = 0;
+	array = malloc(sizeof(char *) * (nb_word + 1));
+	if (!array)
+		return (NULL);
+	while (*s && i < nb_word)
+	{
+		while (*s && is_separator(*s, sep))
+			s++;
+		len = 0;
+		while (s[len] && !is_separator(s[len], sep))
+			len++;
+		if (len)
+		{
+			array[i] = ft_strndup((char *)s, len);
+			if (!array[i++])
+				return (NULL);
+			s += len;
+		}
+	}
+	array[i] = NULL;
+	return (array);
+}
+
+// Fonctionnelle
+char	**ft_split(char const *s, char c)
+{
+	char	**array;
+
+	array = NULL;
+	return (fill_array(array, s, count_word(s, c), c));
+	if (!array)
+		return (NULL);
+	return (array);
+}
+			\end{verbatim}
+		\end{itemize}
+	
+	\subsection{itoa}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{char *ft\_itoa(int nb)}
+			\item Convert string into int.
+			\begin{verbatim}
+int	count_nb(int nb)
+{
+	long int	n;
+	int			count;
+
+	n = nb;
+	count = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+	{
+		count++;
+		n = -n;
+	}
+	while (n > 0)
+	{
+		count++;
+		n /= 10;
+	}
+	return (count);
+}
+
+char	*ft_itoa(int nb)
+{
+	char		*digits;
+	long int	n;
+	int			size;
+
+	n = nb;
+	size = count_nb(n);
+	digits = malloc(sizeof(char) * (size + 1));
+	if (!digits)
+		return (NULL);
+	digits[size--] = '\0';
+	if (n < 0)
+	{
+		digits[0] = '-';
+		n = -n;
+	}
+	while (digits[size] != '-' && size >= 0)
+	{
+		digits[size--] = (n % 10 + '0');
+		n = n / 10;
+	}
+	return (digits);
+}
+			\end{verbatim}
+		\end{itemize}
+	
+	\subsection{strmapi}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{char    *ft\_strmapi(char const *s, char (*f)(unsigned int, char))}
+			\item Apply a given function to each character of a string.
+			 \begin{verbatim}
+char    *ft_strmapi(char const *s, char (*f)(unsigned int, char))               
+{                                                                               
+    int     size;                                                               
+    int     i;                                                                  
+    char    *retour;                                                            
+                                                                                
+    size = ft_strlen(s);                                                        
+    i = 0;                                                                      
+    retour = malloc(sizeof(char) * (size + 1));                                 
+    if (!retour)                                                                
+        return (NULL);                                                          
+    while (i < size)                                                            
+    {                                                                           
+        retour[i] = f(i, s[i]);                                                 
+        i++;                                                                    
+    }                                                                           
+    retour[i] = '\0';                                                           
+    return (retour);                                                            
+}
+			 \end{verbatim}
+		\end{itemize}
+	
+	\subsection{striteri}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{void    ft\_striteri(char *s, void (*f)(unsigned int, char *))                   
+}
+			\item Like strmapi but return anything, the modification are done directly in the str.
+			\begin{verbatim}
+void    ft_striteri(char *s, void (*f)(unsigned int, char *))                   
+{                                                                               
+    unsigned int    i;                                                          
+                                                                                
+    if (!s || !f)                                                               
+        return ;                                                                
+    i = 0;                                                                      
+    while (s[i])                                                                
+    {                                                                           
+        f(i, &s[i]);                                                            
+        i++;                                                                    
+    }                                                                           
+} 
+			\end{verbatim}
+		\end{itemize}
+	
+	\subsection{putchar\_fd}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{void    ft\_putchar\_fd(char c, int fd)                                           }
+			\item Write a character in the file descriptor chosen.
+			\begin{verbatim}
+void    ft_putchar_fd(char c, int fd)                                           
+{                                                                               
+    write(fd, &c, 1);                                                           
+}
+			\end{verbatim}
+		\end{itemize}
+	
+	\subsection{putstr\_fd}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{void    ft\_putchar\_fd(char c, int fd)                                           }
+			\item Write a string in the file descriptor chosen.
+			\begin{verbatim}
+void    ft_putstr_fd(char *str, int fd)                                         
+{                                                                               
+    if (!str)                                                                   
+        return ;                                                                
+    while (*str)                                                                
+    {                                                                           
+        write(fd, str, 1);                                                      
+        str++;                                                                  
+    }                                                                           
+}
+			\end{verbatim}
+		\end{itemize}
+	
+	\subsection{putendl\_fd}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{void    ft\_putendl\_fd(char *str, int fd)                                        }
+			\item After write the string, write the end of line \verb|\n|
+			\begin{verbatim}
+void    ft_putendl_fd(char *str, int fd)                                        
+{                                                                               
+    if (!str)                                                                   
+        return ;                                                                
+    while (*str)                                                                
+    {                                                                           
+        write(fd, str, 1);                                                      
+        str++;                                                                  
+    }                                                                           
+    write(fd, "\n", 1);                                                         
+}
+			\end{verbatim}
+		\end{itemize}
+		
+	\subsection{putnbr\_fd}
+		\begin{itemize}[label=$\rightarrow$]
+			\item Prototype: \texttt{void    ft\_putnbr\_fd(int n, int fd)}
+			\item Write the number in the file descriptor.
+			\begin{verbatim}
+void    ft_putnbr_fd(int n, int fd)                                             
+{                                                                               
+    long int    nb;                                                             
+    char        solo;                                                           
+    int         suivant;                                                        
+                                                                                
+    nb = n;                                                                     
+    if (nb < 0)                                                                 
+    {                                                                           
+        nb = -nb;                                                               
+        write(fd, "-", 1);                                                      
+    }                                                                           
+    solo = (nb % 10) + '0';                                                     
+    suivant = nb / 10;                                                          
+    if (nb > 9)                                                                 
+        ft_putnbr_fd(suivant, fd);                                              
+    write(fd, &solo, 1);                                                        
+}
+			\end{verbatim}
+		\end{itemize}
+	
+	\section{Bonus — Fonctions sur les listes chaînées}
+	
+		\subsection{lstnew}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{t\_list *ft\_lstnew(void *content)}
+				\item Create a new link of a list with is content.
+				\begin{verbatim}
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*elem;
+
+	elem = malloc(sizeof(t_list));
+	if (!elem)
+		return (NULL);
+	elem->next = NULL;
+	elem->content = content;
+	return (elem);
+}
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{lstadd\_front}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{void	ft\_lstadd\_front(t\_list **lst, t\_list *new)}
+				\item Add a new link in the list by the front.
+				\item Important rappel:
+				\begin{verbatim}
+int a = 42;
+
+int *p = &a;     // p contient l’adresse de a
+int **pp = &p;   // pp contient l’adresse de p
+
+a = valeur 42.
+&a = adresse de la variable a.
+p = adresse de la varaible a.
+*p = Valeur pointée par a donc 42.
+pp = Adresse de p.
+*pp = Le contenu de p donc l'adresse de a.
+**pp	 = le contenu de a
+				\end{verbatim}
+				\begin{verbatim}
+void	ft_lstadd_front(t_list **lst, t_list *new)
+{
+	if (!lst || !new)
+		return ;
+	new->next = *lst;
+	*lst = new;
+}
+				\end{verbatim}
+			\end{itemize}
+	
+		\subsection{lst\_size}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{int ft\_lstsize(t\_list *lst) }
+				\item Count the number of link in the list.
+				\begin{verbatim}
+int ft_lstsize(t_list *lst)                                                     
+{                                                                               
+    if (lst == NULL)                                                            
+        return (0);                                                             
+    return (1 + ft_lstsize(lst->next));                                         
+}  
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{lst\_last}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{int ft\_lstsize(t\_list *lst) }
+				\item Get the last link of the list.
+				\begin{verbatim}
+t_list  *ft_lstlast(t_list *lst)                                                
+{                                                                               
+    if (!lst)                                                                   
+        return (NULL);                                                          
+    while (lst->next != NULL)                                                   
+        lst = lst->next;                                                        
+    return (lst);                                                               
+} 
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{lstadd\_back}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{void    ft\_lstadd\_back(t\_list **lst, t\_list *new)}
+				\item Add a link in a list by the end.
+			\end{itemize}
+			\begin{verbatim}
+void    ft_lstadd_back(t_list **lst, t_list *new)                               
+{                                                                               
+    t_list  *copy;                                                              
+                                                                                
+    if (!new || !lst)                                                           
+        return ;                                                                
+    if (*lst == NULL)                                                           
+    {                                                                           
+        *lst = new;                                                             
+        return ;                                                                
+    }                                                                           
+    copy = *lst;                                                                
+    while (copy->next != NULL)                                                  
+        copy = copy->next;                                                      
+    copy->next = new;                                                           
+}
+			\end{verbatim}
+		
+		\subsection{lstdelone}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{void    ft\_lstclear(t\_list **lst, void (*del)(void *))}
+				\item Remove a link of the list.
+				\begin{verbatim}
+void    ft_lstclear(t_list **lst, void (*del)(void *))                          
+{                                                                               
+    t_list  *nettoyeur;                                                         
+                                                                                
+    if (!lst || !del)                                                           
+        return ;                                                                
+    while (*lst)                                                                
+    {                                                                           
+        nettoyeur = (*lst)->next;                                               
+        del((*lst)->content);                                                   
+        free(*lst);                                                             
+        *lst = nettoyeur;                                                       
+    }                                                                           
+    *lst = NULL;                                                                
+}
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{lstclear}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{void    ft\_lstclear(t\_list **lst, void (*del)(void *)) }
+				\item Clear all the list
+			\end{itemize}
+			\begin{verbatim}
+void    ft_lstclear(t_list **lst, void (*del)(void *))                          
+{                                                                               
+    t_list  *nettoyeur;                                                         
+                                                                                
+    if (!lst || !del)                                                           
+        return ;                                                                
+    while (*lst)                                                                
+    {                                                                           
+        nettoyeur = (*lst)->next;                                               
+        del((*lst)->content);                                                   
+        free(*lst);                                                             
+        *lst = nettoyeur;                                                       
+    }                                                                           
+    *lst = NULL;                                                                
+}  
+			\end{verbatim}
+		
+		\subsection{lstiter}
+			\begin{itemize}[label=$\rightarrow$]
+				\item Prototype: \texttt{void    ft\_lstiter(t\_list *lst, void (*f)(void *)) }
+				\item Apply a function f to all the link of the list.
+				\begin{verbatim}
+void    ft_lstiter(t_list *lst, void (*f)(void *))                              
+{                                                                               
+    if (!lst)                                                                   
+        return;                                                                 
+    while(lst)                                                                  
+    {                                                                           
+        f(lst->content);                                                        
+        lst = lst->next;                                                        
+    }                                                                           
+}
+				\end{verbatim}
+			\end{itemize}
+		
+		\subsection{lstmap}
+			\begin{itemize}
+				\item Prototype:
+				\item Create a new list that is a copy of the original but with the content modified by a function to each link (without modifying the original).
+				\begin{verbatim}
+#include "/home/w/Bureau/libft/include/libft.h"
+
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+{
+	t_list	*new_list;
+	t_list	*new_maillon;
+
+	new_list = NULL;
+	if (!lst || !f || !del)
+		return (NULL);
+	while (lst)
+	{
+		new_maillon = ft_lstnew(f(lst->content));
+		if (!new_maillon)
+		{
+			ft_lstclear(&new_list, del);
+			return (NULL);
+		}
+		ft_lstadd_back(&new_list, new_maillon);
+		lst = lst->next;
+	}
+	return (new_list);
+}
+				\end{verbatim}					
+			\end{itemize}
+		
+		
+			
+		
+			
+	
+\end{document}
