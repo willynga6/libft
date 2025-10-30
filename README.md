@@ -30,8 +30,9 @@ installed.
 
 ###  🧠  Use the library with my program:
 
-1)  Include the header name in your code:  
-**#include "libft.h"**
+1)  Include the header name in your code: 
+
+    **#include "libft.h"**
 
 2)  Compile your program with the library:
 (Example with a program called main.c)
@@ -43,7 +44,8 @@ installed.
 ##  🎸  Commands of the Makefile
 
 **make all**: Create the library and all the object files (all the files with  
-the extension .o) necessary for it.  
+the extension .o) necessary for it.
+
 **make clean**: Remove all the object files unnecessary because the library has  
 been created.
 
