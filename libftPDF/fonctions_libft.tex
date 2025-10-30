@@ -104,6 +104,12 @@ int	ft_isprint(int c)
 				\end{verbatim}
 			\end{itemize}
 		
+		\subsection{Rappel pour toute les fonctions mémoires}
+			\begin{itemize}
+				\item Dans toute les fonctions mémories, comme memchr ou bzero etc.... Il en faut pas mettrre de garde fou car on considère que les pointeurs passés sont valides.
+				\item Si le man ne précise aucun garde fou on n'en met pas !
+			\end{itemize}
+		
 		\subsection{memset}
 			\begin{itemize}[label=$\rightarrow$]
 				\item Prototype: \texttt{void    *ft\_memset(void *ptr, int c, size\_t n)}
@@ -507,6 +513,8 @@ char    *ft_strdup(const char *s)
                                                                                 
     size = ft_strlen(s);                                                        
     copy = malloc(size + 1);                                                    
+    if (!malloc)
+    	    reutrn NULL;
     i = 0;                                                                      
     while (i < size)                                                            
     {                                                                           
@@ -634,6 +642,34 @@ size_t  ft_strlcat(char *dest, const char *src, size_t size)
     dest[i] = '\0';                                                             
                                                                                 
     return (dlen + slen);                                                       
+} 
+			\end{verbatim}
+		\end{itemize}
+	
+	\subsection{strlcpy}
+		\begin{itemize}[label=$\rightarrow$]
+			\item: \texttt{Prototype: \texttt{size\_t  ft\_strlcpy(char *dst, const char *src, size\_t size) }}
+			\item size = the size of the buffer.
+			\item Pas de garde fou.
+			 \item On retourne uniquement la taille de src.
+			\begin{verbatim}
+size_t  ft_strlcpy(char *dst, const char *src, size_t size)                     
+{                                                                               
+    size_t  i;                                                                  
+                                                                                
+    i = 0;                                                                      
+    if (size > 0)                                                               
+    {                                                                           
+        while (src[i] && i + 1 < size)                                          
+        {                                                                       
+            dst[i] = src[i];                                                    
+            i++;                                                                
+        }                                                                       
+        dst[i] = '\0';                                                          
+    }                                                                           
+    while (src[i])                                                              
+        i++;                                                                    
+    return (i);                                                                 
 } 
 			\end{verbatim}
 		\end{itemize}
@@ -825,52 +861,45 @@ char	**ft_split(char const *s, char c)
 			\item Prototype: \texttt{char *ft\_itoa(int nb)}
 			\item Convert string into int.
 			\begin{verbatim}
-int	count_nb(int nb)
-{
-	long int	n;
-	int			count;
-
-	n = nb;
-	count = 0;
-	if (n == 0)
-		return (1);
-	if (n < 0)
-	{
-		count++;
-		n = -n;
-	}
-	while (n > 0)
-	{
-		count++;
-		n /= 10;
-	}
-	return (count);
-}
-
-char	*ft_itoa(int nb)
-{
-	char		*digits;
-	long int	n;
-	int			size;
-
-	n = nb;
-	size = count_nb(n);
-	digits = malloc(sizeof(char) * (size + 1));
-	if (!digits)
-		return (NULL);
-	digits[size--] = '\0';
-	if (n < 0)
-	{
-		digits[0] = '-';
-		n = -n;
-	}
-	while (digits[size] != '-' && size >= 0)
-	{
-		digits[size--] = (n % 10 + '0');
-		n = n / 10;
-	}
-	return (digits);
-}
+int count_nb(long int n)                                                        
+{                                                                               
+    int count;                                                                  
+                                                                                
+    count = (n <= 0);                                                           
+    while (n)                                                                   
+    {                                                                           
+        count++;                                                                
+        n /= 10;                                                                
+    }                                                                           
+    return (count);                                                             
+}                                                                               
+                                                                                
+char    *ft_itoa(int nb)                                                        
+{                                                                               
+    char        *digits;                                                        
+    long int    n;                                                              
+    int         size;                                                           
+                                                                                
+    n = (long)nb;                                                               
+    size = count_nb(n);                                                         
+    digits = malloc(sizeof(char) * (size + 1));                                 
+    if (!digits)                                                                
+        return (NULL);                                                          
+    digits[size--] = '\0';                                                      
+    if (n < 0)                                                                  
+    {                                                                           
+        digits[0] = '-';                                                        
+        n = -n;                                                                 
+    }                                                                           
+    while (size > 0)                                                            
+    {                                                                           
+        digits[size--] = (n % 10 + '0');                                        
+        n = n / 10;                                                             
+    }                                                                           
+    if (digits[0] != '-')                                                       
+        digits[0] = (n % 10) + '0';                                             
+    return (digits);                                                            
+}  
 			\end{verbatim}
 		\end{itemize}
 	

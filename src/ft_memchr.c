@@ -7,8 +7,6 @@ void	*ft_memchr(const void*s, int c, size_t n)
 
 	search = (unsigned char *)s;
 	i = 0;
-	if (!search)
-		return (NULL);
 	while (i < n)
 	{
 		if (*search == (unsigned char)c)

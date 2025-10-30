@@ -1,20 +1,11 @@
 #include "/home/w/Bureau/libft/include/libft.h"
 
-int	count_nb(int nb)
+int	count_nb(long int n)
 {
-	long int	n;
-	int			count;
+	int	count;
 
-	n = nb;
-	count = 0;
-	if (n == 0)
-		return (1);
-	if (n < 0)
-	{
-		count++;
-		n = -n;
-	}
-	while (n > 0)
+	count = (n <= 0);
+	while (n)
 	{
 		count++;
 		n /= 10;
@@ -22,13 +13,18 @@ int	count_nb(int nb)
 	return (count);
 }
 
+/*
+**	Il faut traiter le cas
+**	de l'index 0 de digits à part !
+** selon qu'il y'ait un signe ou non
+*/
 char	*ft_itoa(int nb)
 {
 	char		*digits;
 	long int	n;
 	int			size;
 
-	n = nb;
+	n = (long)nb;
 	size = count_nb(n);
 	digits = malloc(sizeof(char) * (size + 1));
 	if (!digits)
@@ -39,10 +35,12 @@ char	*ft_itoa(int nb)
 		digits[0] = '-';
 		n = -n;
 	}
-	while (digits[size] != '-' && size >= 0)
+	while (size > 0)
 	{
 		digits[size--] = (n % 10 + '0');
 		n = n / 10;
 	}
+	if (digits[0] != '-')
+		digits[0] = (n % 10) + '0';
 	return (digits);
 }

@@ -11,7 +11,7 @@ int	is_set(char c, const char *set)
 	return (0);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+size_t	strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	i;
 
@@ -70,6 +70,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	new_word = malloc(sizeof(char) * (end - start + 2));
 	if (!new_word)
 		return (NULL);
-	ft_strlcpy(new_word, s1 + start, end - start + 2);
+	strlcpy(new_word, s1 + start, end - start + 2);
 	return (new_word);
 }

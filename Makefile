@@ -47,3 +47,12 @@ fclean:	clean
 	$(RM) $(NAME)
 
 re:	fclean all
+
+# build a shared library for unit testers that expect libft.so
+SO_SRC = $(SRC) $(BONUS)
+so:
+	@echo "Building libft.so (shared library)..."
+	$(CC) $(FLAGS) -I $(INCLUDE) -fPIC -c $(SO_SRC)
+	$(CC) -shared -o libft.so $(SO_SRC:.c=.o)
+	@echo "libft.so created."
+
