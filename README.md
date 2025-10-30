@@ -23,7 +23,7 @@ How to create the library with the installed files:
 
 1)  Move/Stay in your terminal in the repository where the files are  
 installed.  
-2)  Enter the command:  
+2)  Enter the command:
 -  **make all**  
 -  **make bonus**  
 3)  A file named libft.a is now created.
@@ -33,10 +33,10 @@ installed.
 1)  Include the header name in your code:  
 **#include "libft.h"**
 
-2)  Compile your program with the library:  
-(Example with a program called main.c)  
+2)  Compile your program with the library:
+(Example with a program called main.c)
 
-**gcc main.c libft.a -o main**
+    **gcc main.c libft.a -o main**
 
 3)  Run your program!
 
