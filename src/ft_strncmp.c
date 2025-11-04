@@ -1,4 +1,16 @@
-#include "/home/w/Bureau/libft/include/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wngambi <wngambi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/04 09:50:04 by wngambi           #+#    #+#             */
+/*   Updated: 2025/11/04 09:50:05 by wngambi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../libft.h"
 
 /*	
 **	Ne pas oublier la comparaison avec le caractère de fin
@@ -23,4 +35,3 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
-

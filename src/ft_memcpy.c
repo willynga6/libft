@@ -1,4 +1,16 @@
-#include "/home/w/Bureau/libft/include/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wngambi <wngambi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/04 09:29:43 by wngambi           #+#    #+#             */
+/*   Updated: 2025/11/04 09:29:44 by wngambi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../libft.h"
 
 void	*ft_memcpy(void *destination, const void *source, size_t n)
 {

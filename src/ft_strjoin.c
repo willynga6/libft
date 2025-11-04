@@ -1,6 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "/home/w/Bureau/libft/include/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wngambi <wngambi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/04 09:49:50 by wngambi           #+#    #+#             */
+/*   Updated: 2025/11/04 09:49:51 by wngambi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../libft.h"
 
 char	*remplissage(char const *s1, char const *s2)
 {
