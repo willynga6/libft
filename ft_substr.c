@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wngambi <wngambi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: w <w@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/04 09:50:15 by wngambi           #+#    #+#             */
-/*   Updated: 2025/11/10 16:47:41 by wngambi          ###   ########.fr       */
+/*   Created: 2025/11/11 16:29:46 by w                 #+#    #+#             */
+/*   Updated: 2025/11/11 16:30:16 by w                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		copy[i] = s[start + i];
 		i++;
 	}
-	copy[i] = '\0';
-	return (copy);
+	return (copy[i] = '\0', copy);
 }

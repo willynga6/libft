@@ -3,8 +3,6 @@ AR		=	ar -rcs
 CC		=	gcc
 FLAGS	=	-Wall -Wextra -Werror
 RM		=	rm -f
-NAME	=	libft.a
-INCLUDE	=	include
 
 #------------Fonctions obligatoires-----------------
 SRC		=	ft_isalpha.c ft_isdigit.c ft_isalnum.c       \
@@ -28,7 +26,7 @@ BONUS_OBJ	=	$(BONUS:.c=.o)
 
 #------------Règles compilation-----------------
 %.o:	%.c
-	$(CC) $(FLAGS) -I $(INCLUDE) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 .PHONY: all clean fclean re bonus
 #------------Règles principales-----------------
@@ -47,12 +45,3 @@ fclean:	clean
 	$(RM) $(NAME)
 
 re:	fclean all
-
-# build a shared library for unit testers that expect libft.so
-SO_SRC = $(SRC) $(BONUS)
-so:
-	@echo "Building libft.so (shared library)..."
-	$(CC) $(FLAGS) -I $(INCLUDE) -fPIC -c $(SO_SRC)
-	$(CC) -shared -o libft.so $(SO_SRC:.c=.o)
-	@echo "libft.so created."
-
